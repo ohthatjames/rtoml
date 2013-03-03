@@ -22,7 +22,7 @@ grammar Rtoml
   end
   
   rule assignment
-    S key S "=" S value S
+    S key S "=" S value S comment
     {
       def content
         [key.content, value.content]
@@ -31,7 +31,7 @@ grammar Rtoml
   end
   
   rule key_group
-    S "[" [^\]]+ "]" S
+    S "[" [^\]]+ "]" S comment
     {
       def key_group
         elements[2].text_value.split(".")
@@ -66,6 +66,10 @@ grammar Rtoml
   end
   
   rule blank_line
-    newline / ([\ \t]+ newline)
+    newline / ([\ \t]+ comment newline) 
+  end
+  
+  rule comment
+    ("#" [^\n]*)?
   end
 end

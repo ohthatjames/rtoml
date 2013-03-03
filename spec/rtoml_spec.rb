@@ -42,4 +42,17 @@ describe "Rtoml" do
     EOF
     Rtoml.parse(string).should == { "a" => { "b" => { "foo" => 42 }, "c" => { "foo" => 42 } } }
   end
+  
+  it "ignores comments" do
+    string = <<-EOF
+    #comment
+    [a.b] #comment
+    # comment
+    c = 1 # comment
+    #comment
+    
+    #comment
+    EOF
+    Rtoml.parse(string).should == { "a" => { "b" => { "c" => 1 } } }
+  end
 end
