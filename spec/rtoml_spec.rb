@@ -60,5 +60,10 @@ describe "Rtoml" do
     it "parses floats correctly" do
       Rtoml.parse("foo = 42.99").should == {"foo" => 42.99}
     end
+    
+    it "parses booleans correctly" do
+      Rtoml.parse("foo = true").should == {"foo" => true}
+      Rtoml.parse("foo = false").should == {"foo" => false}
+    end
   end
 end
