@@ -83,5 +83,9 @@ describe "Rtoml" do
     it "parses strings that contain double-quotes" do
       Rtoml.parse('foo = "OMG what \" about this"').should == {"foo" => %Q{OMG what " about this}}
     end
+    
+    it "parses strings containing #" do
+      Rtoml.parse('foo = "OMG what # about this"').should == {"foo" => %Q{OMG what # about this}}
+    end
   end
 end
