@@ -15,8 +15,11 @@ describe "Rtoml" do
   
   it "ignores blank lines" do
     string = <<-EOF
+    
     foo = 42
+    
     bar = 100
+    
     EOF
     Rtoml.parse(string).should == {"foo" => 42, "bar" => 100}
   end

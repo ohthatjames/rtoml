@@ -1,11 +1,11 @@
 grammar Rtoml
   rule document
-    (assignment / newline)+
+    (assignment / blank_line)+
     {
       def content
         data = {}
         elements.each do |element|
-          next if element.content.nil?
+          next if !element.respond_to?(:content) || element.content.nil?
           key, value = element.content
           data[key] = value
         end
@@ -46,11 +46,10 @@ grammar Rtoml
   end
   
   rule newline
-    "\n" 
-    {
-      def content
-        nil
-      end
-    }
+    "\n"
+  end
+  
+  rule blank_line
+    newline / ([\ \t]+ newline)
   end
 end
