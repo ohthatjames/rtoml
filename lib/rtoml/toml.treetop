@@ -1,13 +1,20 @@
 grammar Rtoml
   rule document
-    (assignment / blank_line)+
+    (key_group / assignment / blank_line)+
     {
       def content
         data = {}
+        key_group = []
         elements.each do |element|
-          next if !element.respond_to?(:content) || element.content.nil?
-          key, value = element.content
-          data[key] = value
+          if element.respond_to?(:content) && !element.content.nil?
+            key, value = element.content
+            final_value = key_group.inject(data) do |hash, k|
+              hash = (hash[k] ||= {})
+            end
+            final_value[key] = value
+          elsif element.respond_to?(:key_group)
+            key_group = element.key_group
+          end
         end
         data
       end
@@ -19,6 +26,15 @@ grammar Rtoml
     {
       def content
         [key.content, value.content]
+      end
+    }
+  end
+  
+  rule key_group
+    S "[" [^\]]+ "]" S
+    {
+      def key_group
+        elements[2].text_value.split(".")
       end
     }
   end

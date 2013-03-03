@@ -23,4 +23,23 @@ describe "Rtoml" do
     EOF
     Rtoml.parse(string).should == {"foo" => 42, "bar" => 100}
   end
+  
+  it "evaluates key groups" do
+    string = <<-EOF
+    [a.b.c]
+    d = 42
+    e = 43
+    EOF
+    Rtoml.parse(string).should == { "a" => { "b" => { "c" => { "d" => 42, "e" => 43 } } } }
+  end
+  
+  it "evaluates multiple key groups" do
+    string = <<-EOF
+    [a.b]
+    foo = 42
+    [a.c]
+    foo = 42
+    EOF
+    Rtoml.parse(string).should == { "a" => { "b" => { "foo" => 42 }, "c" => { "foo" => 42 } } }
+  end
 end
