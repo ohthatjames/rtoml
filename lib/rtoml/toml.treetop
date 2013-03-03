@@ -1,0 +1,46 @@
+grammar Rtoml
+  rule document
+    assignment+
+    {
+      def content
+        data = {}
+        elements.each do |element|
+          key, value = element.content
+          data[key] = value
+        end
+        data
+      end
+    }
+  end
+  
+  rule assignment
+    S key S "=" S value S
+    {
+      def content
+        [key.content, value.content]
+      end
+    }
+  end
+  
+  rule key
+    [a-zA-z]+
+    {
+      def content
+        text_value
+      end
+    }
+  end
+  
+  rule value
+    [0-9]+
+    {
+      def content
+        text_value.to_i
+      end
+    }
+  end
+  
+  rule S
+    [\ \t]*
+  end
+end
