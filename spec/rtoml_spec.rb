@@ -55,10 +55,12 @@ describe "Rtoml" do
   describe "types" do
     it "parses integers correctly" do
       Rtoml.parse("foo = 42").should == {"foo" => 42}
+      Rtoml.parse("foo = -42").should == {"foo" => -42}
     end
     
     it "parses floats correctly" do
       Rtoml.parse("foo = 42.99").should == {"foo" => 42.99}
+      Rtoml.parse("foo = -42.99").should == {"foo" => -42.99}
     end
     
     it "parses booleans correctly" do

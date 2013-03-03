@@ -73,7 +73,7 @@ grammar Rtoml
   end
   
   rule float
-    [0-9]+ "." [0.9]+
+    "-"? [0-9]+ "." [0.9]+
     {
       def content
         text_value.to_f
@@ -82,7 +82,7 @@ grammar Rtoml
   end
   
   rule int
-    [0-9]+
+    "-"? [0-9]+
     {
       def content
         text_value.to_i
