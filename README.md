@@ -1,6 +1,6 @@
 # Rtoml
 
-TODO: Write a gem description
+Just messin' around with treetop to create a parser for TOML.
 
 ## Installation
 
@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Seriously, why would you use it?
 
 ## Contributing
 
