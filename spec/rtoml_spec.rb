@@ -77,5 +77,9 @@ describe "Rtoml" do
     it "parses strings that contain integers as strings" do
       Rtoml.parse('foo = "42"').should == {"foo" => "42"}
     end
+    
+    it "parses strings that contain double-quotes" do
+      Rtoml.parse('foo = "OMG what \" about this"').should == {"foo" => %Q{OMG what " about this}}
+    end
   end
 end

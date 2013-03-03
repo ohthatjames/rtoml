@@ -55,10 +55,10 @@ grammar Rtoml
   end
   
   rule string
-    "\"" [^\"]* "\""
+    '"' ('\"' / !'"' .)* '"'
     {
       def content
-        elements[1].text_value
+        elements[1].text_value.gsub('\"', '"')
       end
     }
   end
