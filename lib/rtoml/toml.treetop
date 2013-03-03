@@ -55,15 +55,15 @@ grammar Rtoml
   end
   
   rule array
-    empty_array / single_array / multi_array
+    empty_array / multi_array
   end
   
   rule multi_array
-    "[" value next_value+ "]"
+    "[" value rest_values:next_value* "]"
     {
       def content
         [value.content] +
-        elements[2].elements.inject([]) do |acc, element|
+        rest_values.elements.inject([]) do |acc, element|
           acc << element.content unless element.text_value == ","
         end
       end
@@ -75,15 +75,6 @@ grammar Rtoml
     {
       def content
         elements[1].content
-      end
-    }
-  end
-  
-  rule single_array
-    "[" value "]"
-    {
-      def content
-        [elements[1].content]
       end
     }
   end
