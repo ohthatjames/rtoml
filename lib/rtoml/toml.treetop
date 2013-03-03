@@ -1,3 +1,5 @@
+require 'date'
+
 grammar Rtoml
   rule document
     (key_group / assignment / blank_line)+
@@ -49,7 +51,16 @@ grammar Rtoml
   end
   
   rule value
-    float / int / boolean_true / boolean_false
+    date / float / int / boolean_true / boolean_false
+  end
+  
+  rule date
+    [0-9] 4..4 "-" [0-9] 2..2 "-" [0-9] 2..2 "T" [0-9] 2..2 ":" [0-9] 2..2 ":" [0-9] 2..2 "Z"
+    {
+      def content
+        DateTime.iso8601(text_value)
+      end
+    }
   end
   
   rule float
