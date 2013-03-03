@@ -87,5 +87,17 @@ describe "Rtoml" do
     it "parses strings containing #" do
       Rtoml.parse('foo = "OMG what # about this"').should == {"foo" => %Q{OMG what # about this}}
     end
+    
+    it "parses empty arrays" do
+      Rtoml.parse('foo = []').should == {"foo" => []}
+    end
+    
+    it "parses an array with one element" do
+      Rtoml.parse('foo = [42]').should == {"foo" => [42]}
+    end
+    
+    it "parses an array with multiple elements" do
+      Rtoml.parse('foo = [42,43,44,45]').should == {"foo" => [42, 43, 44, 45]}
+    end
   end
 end

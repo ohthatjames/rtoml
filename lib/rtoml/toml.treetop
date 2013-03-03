@@ -51,7 +51,50 @@ grammar Rtoml
   end
   
   rule value
-    string / date / float / int / boolean_true / boolean_false
+    array / string / date / float / int / boolean_true / boolean_false
+  end
+  
+  rule array
+    empty_array / single_array / multi_array
+  end
+  
+  rule multi_array
+    "[" value next_value+ "]"
+    {
+      def content
+        [value.content] +
+        elements[2].elements.inject([]) do |acc, element|
+          acc << element.content unless element.text_value == ","
+        end
+      end
+    }
+  end
+  
+  rule next_value
+    "," value
+    {
+      def content
+        elements[1].content
+      end
+    }
+  end
+  
+  rule single_array
+    "[" value "]"
+    {
+      def content
+        [elements[1].content]
+      end
+    }
+  end
+  
+  rule empty_array
+    "[]"
+    {
+      def content
+        []
+      end
+    }
   end
   
   rule string
