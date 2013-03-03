@@ -69,5 +69,13 @@ describe "Rtoml" do
     it "parses dates correctly" do
       Rtoml.parse("foo = 1979-05-27T07:32:00Z").should == {"foo" => DateTime.parse("1979-05-27T07:32:00Z")}
     end
+    
+    it "parses strings correctly" do
+      Rtoml.parse('foo = "Hi"').should == {"foo" => "Hi"}
+    end
+    
+    it "parses strings that contain integers as strings" do
+      Rtoml.parse('foo = "42"').should == {"foo" => "42"}
+    end
   end
 end

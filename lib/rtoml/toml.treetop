@@ -51,7 +51,16 @@ grammar Rtoml
   end
   
   rule value
-    date / float / int / boolean_true / boolean_false
+    string / date / float / int / boolean_true / boolean_false
+  end
+  
+  rule string
+    "\"" [^\"]* "\""
+    {
+      def content
+        elements[1].text_value
+      end
+    }
   end
   
   rule date
