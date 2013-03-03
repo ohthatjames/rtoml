@@ -49,6 +49,19 @@ grammar Rtoml
   end
   
   rule value
+    float / int
+  end
+  
+  rule float
+    [0-9]+ "." [0.9]+
+    {
+      def content
+        text_value.to_f
+      end
+    }
+  end
+  
+  rule int
     [0-9]+
     {
       def content

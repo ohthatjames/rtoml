@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe "Rtoml" do
-  it "parses integers correctly" do
-    Rtoml.parse("foo = 42").should == {"foo" => 42}
-  end
-  
   it "parses multiple keys on multiple lines" do
     string = <<-EOF
     foo = 42
@@ -54,5 +50,15 @@ describe "Rtoml" do
     #comment
     EOF
     Rtoml.parse(string).should == { "a" => { "b" => { "c" => 1 } } }
+  end
+  
+  describe "types" do
+    it "parses integers correctly" do
+      Rtoml.parse("foo = 42").should == {"foo" => 42}
+    end
+    
+    it "parses floats correctly" do
+      Rtoml.parse("foo = 42.99").should == {"foo" => 42.99}
+    end
   end
 end
